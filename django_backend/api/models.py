@@ -40,7 +40,7 @@ class Image(models.Model):
         description (str): description of the image
         link (str): url of the image
         created_at (datetime): creation date
-        id_user (int): id to do refernce of the user
+        id_user (int): id to reference an user
     """
     
     title = models.CharField(max_length=20, null=False, blank=False)
@@ -64,3 +64,19 @@ class Category(models.Model):
     
     category = models.CharField(max_length=15, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+# -------------------------------------------------------------
+#                       Image category
+# -------------------------------------------------------------
+class ImageCategory(models.Model):
+    """
+    This model define an image category
+
+    Args:
+        id_image (int): id to reference an image
+        id_category (int): id to reference a category
+    """
+    
+    id_image = models.ForeignKey(Image, null=False, blank=False, on_delete=models.CASCADE)
+    id_category = models.ForeignKey(Category, null=False, blank=False, on_delete=models.CASCADE)
