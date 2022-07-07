@@ -20,7 +20,8 @@ class User(AbstractBaseUser):
         icon (str): url of the icon
         created_at (datetime): creation date
     """
-    
+
+
     email = models.EmailField(unique=True, null=False, blank=False,)
     username = models.CharField(max_length=20, null=False, blank=False,)
     description = models.CharField(max_length=200, null=False, blank=False,)
@@ -39,8 +40,26 @@ class Category(models.Model):
         category (datetime): creation date
         created_at (str): description of the image
     """
+
+
+    class CategoryChoice(models.TextChoices):
+        """
+        This inner class define our choices for several categories
     
-    category = models.CharField(max_length=15, null=False, blank=False)
+        Attributes:
+            VIDEOGAMES tuple(str): Choice for videogames.
+            ANIME tuple(str): Choice for anime.
+            MUSIC tuple(str): Choice for music.
+            CARTOONS tuple(str): Choice for cartoons.
+        """
+        
+        VIDEOGAMES = ('VIDEOGAMES', 'Videogames')
+        ANIME = ('ANIME', 'Anime')
+        MUSIC = ('MUSIC', 'Music')
+        CARTOONS = ('CARTOONS', 'Cartoons')
+
+
+    category = models.CharField(max_length=15, choices=CategoryChoice.choices, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -58,7 +77,8 @@ class Image(models.Model):
         created_at (datetime): creation date
         id_user (int): id to reference an user
     """
-    
+
+
     title = models.CharField(max_length=20, null=False, blank=False)
     description = models.CharField(max_length=200, null=False, blank=False)
     link = models.CharField(max_length=200, null=False, blank=False)
@@ -78,6 +98,7 @@ class ImageCategory(models.Model):
         id_image (int): id to reference an image
         id_category (int): id to reference a category
     """
-    
+
+
     image = models.ForeignKey(Image, null=False, blank=False, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, null=False, blank=False, on_delete=models.CASCADE)
