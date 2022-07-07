@@ -29,6 +29,22 @@ class User(AbstractBaseUser):
 
 
 # -------------------------------------------------------------
+#                           Category
+# -------------------------------------------------------------
+class Category(models.Model):
+    """
+    This model define a category
+
+    Args:
+        category (datetime): creation date
+        created_at (str): description of the image
+    """
+    
+    category = models.CharField(max_length=15, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+# -------------------------------------------------------------
 #                             Image
 # -------------------------------------------------------------
 class Image(models.Model):
@@ -47,23 +63,7 @@ class Image(models.Model):
     description = models.CharField(max_length=200, null=False, blank=False)
     link = models.CharField(max_length=200, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    id_user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
-
-
-# -------------------------------------------------------------
-#                           Category
-# -------------------------------------------------------------
-class Category(models.Model):
-    """
-    This model define a category
-
-    Args:
-        category (datetime): creation date
-        created_at (str): description of the image
-    """
-    
-    category = models.CharField(max_length=15, null=False, blank=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    id_user = models.ManyToManyField(User, null=False, blank=False, through='ImageCategory', on_delete=models.CASCADE)
 
 
 # -------------------------------------------------------------
