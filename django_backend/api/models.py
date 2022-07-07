@@ -63,7 +63,8 @@ class Image(models.Model):
     description = models.CharField(max_length=200, null=False, blank=False)
     link = models.CharField(max_length=200, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    id_user = models.ManyToManyField(User, null=False, blank=False, through='ImageCategory', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category, through='ImageCategory')
 
 
 # -------------------------------------------------------------
@@ -78,5 +79,5 @@ class ImageCategory(models.Model):
         id_category (int): id to reference a category
     """
     
-    id_image = models.ForeignKey(Image, null=False, blank=False, on_delete=models.CASCADE)
-    id_category = models.ForeignKey(Category, null=False, blank=False, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, null=False, blank=False, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, null=False, blank=False, on_delete=models.CASCADE)
