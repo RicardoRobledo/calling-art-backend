@@ -32,6 +32,8 @@ class User(AbstractBaseUser):
 # -------------------------------------------------------------
 #                           Category
 # -------------------------------------------------------------
+
+
 class Category(models.Model):
     """
     This model define a category
@@ -66,6 +68,8 @@ class Category(models.Model):
 # -------------------------------------------------------------
 #                             Image
 # -------------------------------------------------------------
+
+
 class Image(models.Model):
     """
     This model define an Image
@@ -75,7 +79,7 @@ class Image(models.Model):
         description (str): description of the image
         link (str): url of the image
         created_at (datetime): creation date
-        id_user (int): id to reference an user
+        user (int): id to reference an user
     """
 
 
@@ -90,13 +94,15 @@ class Image(models.Model):
 # -------------------------------------------------------------
 #                       Image category
 # -------------------------------------------------------------
+
+
 class ImageCategory(models.Model):
     """
     This model define an image category
 
     Args:
-        id_image (int): id to reference an image
-        id_category (int): id to reference a category
+        image (int): id to reference an image
+        category (int): id to reference a category
     """
 
 
