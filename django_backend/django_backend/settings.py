@@ -40,11 +40,13 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
+THIRD_APPS = [
+    'rest_framework',
+]
+
 MY_APPS = [
     'api',
 ]
-
-THIRD_APPS = []
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS 
 
