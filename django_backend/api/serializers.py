@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['username', 'email', 'description', 'icon', 'created_at',]
+        fields = ('username', 'email', 'description', 'icon', 'created_at',)
 
 
 # -------------------------------------------------------------
@@ -37,7 +37,7 @@ class CategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Category
-        fields = ['category', 'created_at',]
+        fields = ('category', 'created_at',)
 
 
 # -------------------------------------------------------------
@@ -49,7 +49,7 @@ class ImageSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Image
-        fields = ['id', 'title', 'link', 'description', 'created_at', 'user']
+        fields = ('id', 'title', 'link', 'description', 'created_at', 'user')
 
 
 # -------------------------------------------------------------
@@ -61,4 +61,4 @@ class ImageCategorySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ImageCategory
-        fields = ['image', 'category',]
+        fields = ('image', 'category',)

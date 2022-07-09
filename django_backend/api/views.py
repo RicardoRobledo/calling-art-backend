@@ -25,7 +25,7 @@ __version__ = "0.1"
 class UserViewSet(viewsets.ModelViewSet):
     
     queryset =  User.objects.all()
-    serializer = UserSerializer
+    serializer_class = UserSerializer
 
 
 # -------------------------------------------------------------
@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     
     queryset =  Category.objects.all()
-    serializer = CategorySerializer
+    serializer_class = CategorySerializer
 
 
 # -------------------------------------------------------------
@@ -47,7 +47,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ImageViewSet(viewsets.ModelViewSet):
     
     queryset =  Image.objects.all()
-    serializer = ImageSerializer
+    serializer_class = ImageSerializer
 
 
 # -------------------------------------------------------------
@@ -58,4 +58,4 @@ class ImageViewSet(viewsets.ModelViewSet):
 class ImageCategoryViewSet(viewsets.ModelViewSet):
     
     queryset =  ImageCategory.objects.all()
-    serializer = ImageCategorySerializer
+    serializer_class = ImageCategorySerializer

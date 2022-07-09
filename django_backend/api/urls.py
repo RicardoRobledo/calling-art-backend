@@ -18,9 +18,9 @@ __version__ = '0.1'
 
 
 router = SimpleRouter()
-router.register('user/', UserViewSet.as_view(), basename='user')
-router.register('category/', CategoryViewSet.as_view(), basename='category')
-router.register('image-category/', ImageCategoryViewSet.as_view(), basename='image-category')
-router.register('', ImageViewSet.as_view(), basename='image')
+router.register('user', UserViewSet, basename='user')
+router.register('category', CategoryViewSet, basename='category')
+router.register('image-category', ImageCategoryViewSet, basename='image-category')
+router.register('', ImageViewSet, basename='image')
 
 urlpatterns = router.urls
