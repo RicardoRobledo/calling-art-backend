@@ -20,7 +20,8 @@ class User(AbstractBaseUser):
         icon (str): url of the icon
         created_at (datetime): creation date
     """
-
+    
+    USERNAME_FIELD = 'username'
 
     email = models.EmailField(unique=True, null=False, blank=False,)
     username = models.CharField(max_length=20, null=False, blank=False,)
