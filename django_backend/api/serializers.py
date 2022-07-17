@@ -54,10 +54,11 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         fields = ('id', 'title', 'link', 'description', 'created_at', 'user')
 
+
     # This method save our updated model with the user stablished
-    def create(self, validated_data):
+    def create(self, validated_data:dict):
         validated_data['user'] = User.objects.get(id=validated_data['user']['id']) # search user and replace in Python's dict
-        print(validated_data)
+        print(f"{type(validated_data)} {validated_data}")
         return Image.objects.create(**validated_data)
 
 

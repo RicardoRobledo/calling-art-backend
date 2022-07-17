@@ -14,7 +14,7 @@ class Category(models.Model):
     """
     This model define a category
 
-    Args:
+    Attributes:
         category (datetime): creation date
         created_at (str): description of the image
     """
@@ -54,7 +54,7 @@ class Image(models.Model):
     """
     This model define an Image
 
-    Args:
+    Attributes:
         title (str): title of the image
         description (str): description of the image
         link (str): url of the image
@@ -80,7 +80,7 @@ class ImageCategory(models.Model):
     """
     This model define an image category
 
-    Args:
+    Attributes:
         image (int): id to reference an image
         category (int): id to reference a category
     """
