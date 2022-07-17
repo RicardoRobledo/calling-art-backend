@@ -3,6 +3,7 @@ This module define our serializers
 """
 
 
+from venv import create
 from rest_framework import serializers
 from .models import(
     User,
@@ -56,6 +57,7 @@ class ImageSerializer(serializers.ModelSerializer):
     # This method save our updated model with the user stablished
     def create(self, validated_data):
         validated_data['user'] = User.objects.get(id=validated_data['user']['id']) # search user and replace in Python's dict
+        print(validated_data)
         return Image.objects.create(**validated_data)
 
 
@@ -66,6 +68,17 @@ class ImageSerializer(serializers.ModelSerializer):
 
 class ImageCategorySerializer(serializers.ModelSerializer):
     
+    #category = CategorySerializer()
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+        many=True,
+    )
+    image = serializers.IntegerField(source="image.id")
+    
     class Meta:
+        fields = '__all__'
         model = ImageCategory
-        fields = ('image', 'category',)
+        
+    def create(self, validated_data):
+        validated_data['image'] = Image.objects.get(id=validated_data['image']['id'])
+        return ImageCategory.objects.create(**validated_data)

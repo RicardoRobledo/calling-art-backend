@@ -60,6 +60,10 @@ class Category(models.Model):
         ANIME = ('ANIME', 'Anime')
         MUSIC = ('MUSIC', 'Music')
         CARTOONS = ('CARTOONS', 'Cartoons')
+        
+    
+    def __str__(self):
+        return self.category
 
 
     category = models.CharField(max_length=15, choices=CategoryChoice.choices, null=False, blank=False)
