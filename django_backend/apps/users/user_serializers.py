@@ -27,4 +27,14 @@ class UserSerializer(serializers.ModelSerializer):
         """
         
         model: User = User
-        fields: tuple = ('username', 'email', 'description', 'icon',)
+        fields: tuple = ('username', 'password', 'email', 'description', 'icon',)
+
+
+    def to_representation(self, instance):
+        return {
+            'username': instance.username,
+            'email': instance.email,
+            'description': instance.description,
+            'icon': instance.icon,
+            'created_at': instance.created_at,
+        }

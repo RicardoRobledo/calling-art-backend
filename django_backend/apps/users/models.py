@@ -26,7 +26,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'username'
 
     email = models.EmailField(unique=True, null=False, blank=False,)
-    username = models.CharField(max_length=20, null=False, blank=False,)
+    username = models.CharField(unique=True, max_length=20, null=False, blank=False,)
     description = models.CharField(max_length=200, null=False, blank=False,)
     icon = models.CharField(max_length=200, null=False, blank=False,)
     created_at = models.DateTimeField(auto_now_add=True)
