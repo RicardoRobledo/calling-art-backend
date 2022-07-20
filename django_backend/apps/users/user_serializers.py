@@ -45,13 +45,35 @@ class UserSerializer(serializers.ModelSerializer):
         This method create our user
 
         Args:
-            validated_data (dict): dict of our validated instance 
+            validated_data (dict): data dict our validated instance 
 
         Returns:
-            Our user validated like encrypted password
+            Our user validated with encrypted password
         """
 
         user_validated = User(**validated_data)
+        user_validated.set_password(validated_data['password'])
+        user_validated.save()
+        
+        return user_validated
+
+
+    def update(self, instance, validated_data) -> User:
+        """
+        This method update our user
+
+        Args:
+            instance (User): user object
+            validated_data (dict): dict with our new values to add
+
+        Returns:
+            Our user validated with encrypted password
+        """
+        
+        user_validated = super().update(
+            instance=instance,
+            validated_data=validated_data
+        )
         user_validated.set_password(validated_data['password'])
         user_validated.save()
         
