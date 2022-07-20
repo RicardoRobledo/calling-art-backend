@@ -14,13 +14,6 @@ __version__ = "0.1"
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    This class define our view abour an user
-
-    Attributes:
-        serializer_class (UserSerializer): Contains our serializer
-        queryset (QuerySet): Contains our query of an user model
-    """
     
     serializer_class = UserSerializer
     queryset = User.objects.all()
