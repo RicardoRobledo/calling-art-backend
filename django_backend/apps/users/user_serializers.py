@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import User
 
 
-__author__ = "Ricardo Robledo"
+__author__ = "Ricardo"
 __version__ = "0.1"
 
 

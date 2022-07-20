@@ -5,6 +5,10 @@ from apps.images.views.image_viewsets import ImageViewSet
 from apps.images.views.general_views import CategoryViewSet, ImageCategoryViewSet
 
 
+__author__ = "Ricardo"
+__version__ = "0.1"
+
+
 router = SimpleRouter()
 router.register('images', ImageViewSet, basename='images')
 router.register('category', CategoryViewSet, basename='category')
