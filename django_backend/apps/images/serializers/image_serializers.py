@@ -5,6 +5,10 @@ from apps.users.models import User
 from ..models import Image
 
 
+__author__ = "Ricardo Robledo"
+__version__ = "0.1"
+
+
 # -------------------------------------------------------------
 #                       Image serializer
 # -------------------------------------------------------------
