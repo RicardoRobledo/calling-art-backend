@@ -52,7 +52,7 @@ class UserSerializer(serializers.ModelSerializer):
         """
 
         user_validated = User(**validated_data)
-        user_validated.set_password(validated_data['password'])
+        user_validated = self.encript_password(user_validated, validated_data['password'])
         user_validated.save()
         
         return user_validated
@@ -74,7 +74,24 @@ class UserSerializer(serializers.ModelSerializer):
             instance=instance,
             validated_data=validated_data
         )
-        user_validated.set_password(validated_data['password'])
+        user_validated = self.encript_password(user_validated, validated_data['password'])
         user_validated.save()
+
+        return user_validated
+    
+    
+    def encript_password(self, user_validated:User, password:str) -> User:
+        """
+        This method encript the password to an user
+
+        Args:
+            user_validated (User): user object updated
+            password (str): password to encript
+
+        Returns:
+            A user instance with encripted password
+        """
+        
+        user_validated.set_password(password)
         
         return user_validated
