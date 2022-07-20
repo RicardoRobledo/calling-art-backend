@@ -39,7 +39,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
         model: Category = Category
-        fields: tuple(str) = ('category', 'created_at',)
+        fields: tuple = ('category', 'created_at',)
 
 
 # -------------------------------------------------------------

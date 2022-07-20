@@ -39,7 +39,8 @@ THIRD_APPS = [
 ]
 
 MY_APPS = [
-    'api',
+    'apps.users',
+    'apps.images',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS 

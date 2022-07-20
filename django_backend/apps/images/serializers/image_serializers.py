@@ -32,7 +32,7 @@ class ImageSerializer(serializers.ModelSerializer):
         """
         
         model: Image = Image
-        fields: tuple(str) = ('id', 'title', 'link', 'description', 'created_at', 'user')
+        fields: tuple = ('id', 'title', 'link', 'description', 'created_at', 'user',)
 
 
     # This method save our updated model with the user stablished
