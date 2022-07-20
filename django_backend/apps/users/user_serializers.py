@@ -38,3 +38,21 @@ class UserSerializer(serializers.ModelSerializer):
             'icon': instance.icon,
             'created_at': instance.created_at,
         }
+
+
+    def create(self, validated_data) -> User:
+        """
+        This method create our user
+
+        Args:
+            validated_data (dict): dict of our validated instance 
+
+        Returns:
+            Our user validated like encrypted password
+        """
+
+        user_validated = User(**validated_data)
+        user_validated.set_password(validated_data['password'])
+        user_validated.save()
+        
+        return user_validated
