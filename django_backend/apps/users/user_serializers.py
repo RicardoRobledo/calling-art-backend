@@ -32,7 +32,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return {
+            'id': instance.id,
             'username': instance.username,
+            #'password': instance.password,
             'email': instance.email,
             'description': instance.description,
             'icon': instance.icon,
