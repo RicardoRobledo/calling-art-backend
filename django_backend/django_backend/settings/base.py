@@ -36,11 +36,14 @@ DJANGO_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
 ]
 
 MY_APPS = [
     'apps.users',
     'apps.images',
+    'apps.accounts',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS 
