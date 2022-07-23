@@ -1,9 +1,11 @@
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from apps.base.utils import format_response
 from apps.accounts.serializers import UserTokenSerializer
+from apps.users.user_serializers import UserSerializer
 
 
 # ---------------------------------------------
@@ -34,10 +36,12 @@ class LoginView(ObtainAuthToken):
             if user.is_active:
                 
                 token = Token.objects.get_or_create(user=user)[0]
-                user = UserTokenSerializer(data=user)
-                
-                message = {'Token':token.key,
-                           'User':""}
+                user = UserTokenSerializer(user)
+
+                message = {
+                    'Token':token.key,
+                    'User':user.data,
+                }
                 status_gotten = status.HTTP_200_OK
 
             else:
@@ -48,5 +52,28 @@ class LoginView(ObtainAuthToken):
 
             message = {'message':'Error en credenciales'}
             status_gotten = status.HTTP_401_UNAUTHORIZED
+
+        return format_response(message, status_gotten)
+
+
+# ---------------------------------------------
+#                 Register view
+# ---------------------------------------------
+
+
+class RegisterView(APIView):
+
+
+    def post(self, request, *args, **kwargs):
+        """
+        This method is for do login
+
+        Returns:
+            Our response object formatted
+        """
+        
+        register_serializer = UserSerializer(data=request.data)
+        message = None
+        status_gotten = None
 
         return format_response(message, status_gotten)
