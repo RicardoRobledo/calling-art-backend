@@ -1,4 +1,3 @@
-from django.urls import is_valid_path
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
@@ -29,8 +28,10 @@ class LoginView(ObtainAuthToken):
         message = None
         status_gotten = None
 
+
         # case 1: data are valid
         if login_serializer.is_valid():
+
             user = login_serializer.validated_data['user']
             
             # case 2: user is active
@@ -45,14 +46,17 @@ class LoginView(ObtainAuthToken):
                 }
                 status_gotten = status.HTTP_200_OK
 
+
             else:
-                message = {'message':'Error debibo a que ese usuario no esta activo'},
+
+                message = {'message':'error debibo a que ese usuario no esta activo'},
                 status_gotten = status.HTTP_401_UNAUTHORIZED
 
         else:
 
-            message = {'message':'Error en credenciales'}
+            message = {'message':'error en credenciales'}
             status_gotten = status.HTTP_401_UNAUTHORIZED
+
 
         return format_response(message, status_gotten)
 
@@ -67,7 +71,7 @@ class RegisterView(APIView):
 
     def post(self, request, *args, **kwargs):
         """
-        This method is for do login
+        This method is for register our user
 
         Returns:
             Our response object formatted
@@ -76,9 +80,8 @@ class RegisterView(APIView):
         register_serializer = UserSerializer(data=request.data)
         message = None
         status_gotten = None
+        
 
-
-        # si es valido
         if register_serializer.is_valid():
             
             user = register_serializer.save()
@@ -89,8 +92,31 @@ class RegisterView(APIView):
             
         else:
             
-            message = {'message':'entrada de datos invalida'}
+            message = {'message':'ese usuario ya existe'}
             status_gotten = status.HTTP_400_BAD_REQUEST
             
+
+        return format_response(message, status_gotten)
+
+
+# ---------------------------------------------
+#                 Logout view
+# ---------------------------------------------
+
+
+class LogoutView(APIView):
+    
+    def get(self, request, *args, **kwargs):
+        """
+        This method is for log out
+
+        Returns:
+            Our response object formatted
+        """
+        
+        logout_serializer = UserSerializer(data=request.data)
+        message = None
+        status_gotten = None
+
 
         return format_response(message, status_gotten)
