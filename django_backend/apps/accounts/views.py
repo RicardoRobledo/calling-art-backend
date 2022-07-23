@@ -1,8 +1,10 @@
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.renderers import JSONRenderer
 
 from apps.base.utils import format_response
+from apps.users.user_serializers import UserSerializer
 
 
 # ---------------------------------------------
@@ -31,9 +33,10 @@ class LoginView(ObtainAuthToken):
             
             # case 2: user is active
             if user.is_active:
-                Token.objects.get_or_create(user=user)
+                
+                token = Token.objects.get_or_create(user=user)[0]
             
-                message = {'message':'Se ha iniciado sesion'}
+                message = {'Token':token.key}
                 status_gotten = status.HTTP_200_OK
 
             else:
