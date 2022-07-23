@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from apps.base.utils import format_response
-from apps.users.models import User
 
 
 # ---------------------------------------------
@@ -23,20 +22,27 @@ class LoginView(ObtainAuthToken):
         """
         
         login_serializer = self.serializer_class(data=request.data)
+        message = None
+        status_gotten = None
 
+        # case 1: data are valid
         if login_serializer.is_valid():
             user = login_serializer.validated_data['user']
-            print(user)
-            print(User.objects.all())
             
-            return format_response(
-                {'message':'Se ha iniciado sesion'},
-                status.HTTP_200_OK
-            )
+            # case 2: user is active
+            if user.is_active:
+                Token.objects.get_or_create(user=user)
+            
+                message = {'message':'Se ha iniciado sesion'}
+                status_gotten = status.HTTP_200_OK
+
+            else:
+                message = {'message':'Error debibo a que ese usuario no esta activo'},
+                status_gotten = status.HTTP_401_UNAUTHORIZED
 
         else:
 
-            return format_response(
-                {'message':'Error en credenciales'},
-                status.HTTP_401_UNAUTHORIZED
-            )
+            message = {'message':'Error en credenciales'}
+            status_gotten = status.HTTP_401_UNAUTHORIZED
+
+        return format_response(message, status_gotten)
