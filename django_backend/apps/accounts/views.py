@@ -1,3 +1,4 @@
+from django.urls import is_valid_path
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
@@ -75,5 +76,21 @@ class RegisterView(APIView):
         register_serializer = UserSerializer(data=request.data)
         message = None
         status_gotten = None
+
+
+        # si es valido
+        if register_serializer.is_valid():
+            
+            user = register_serializer.save()
+            Token.objects.get_or_create(user=user)
+            
+            message = {'message':'usuario creado con exito'}
+            status_gotten = status.HTTP_200_OK
+            
+        else:
+            
+            message = {'message':'entrada de datos invalida'}
+            status_gotten = status.HTTP_400_BAD_REQUEST
+            
 
         return format_response(message, status_gotten)
