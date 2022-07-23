@@ -11,12 +11,4 @@ class UserTokenSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-
-    def to_representation(self, instance):
-        return {
-            'username':instance.username,
-            'email':instance.email,
-            'description':instance.description,
-            'icon':instance.icon,
-        }
-    
+        fields = ('username', 'email', 'description', 'icon')

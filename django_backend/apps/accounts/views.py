@@ -1,10 +1,9 @@
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.renderers import JSONRenderer
 
 from apps.base.utils import format_response
-from apps.users.user_serializers import UserSerializer
+from apps.accounts.serializers import UserTokenSerializer
 
 
 # ---------------------------------------------
@@ -35,8 +34,10 @@ class LoginView(ObtainAuthToken):
             if user.is_active:
                 
                 token = Token.objects.get_or_create(user=user)[0]
-            
-                message = {'Token':token.key}
+                user = UserTokenSerializer(data=user)
+                
+                message = {'Token':token.key,
+                           'User':""}
                 status_gotten = status.HTTP_200_OK
 
             else:
