@@ -1,7 +1,9 @@
+from django.contrib.sessions.models import Session
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from datetime import datetime
 
 from apps.base.utils import format_response
 from apps.accounts.serializers import UserTokenSerializer
@@ -105,7 +107,8 @@ class RegisterView(APIView):
 
 
 class LogoutView(APIView):
-    
+
+
     def get(self, request, *args, **kwargs):
         """
         This method is for log out
@@ -114,9 +117,52 @@ class LogoutView(APIView):
             Our response object formatted
         """
         
-        logout_serializer = UserSerializer(data=request.data)
+        token_gotten = Token.objects.filter(
+                        key=request.headers['Authorization'][6:]
+                        )
         message = None
         status_gotten = None
 
 
+        if token_gotten.exists():
+
+            self.remove_token_and_sessions(token_gotten.first())
+            
+            message = {
+                'message':'cierre sesion exitoso'
+            }
+            status_gotten = status.HTTP_200_OK
+
+
+        else:
+            
+            message = {
+                'message':'error debido a que no se encontro el token de acceso'
+            }
+            status_gotten = status.HTTP_400_BAD_REQUEST
+
+
         return format_response(message, status_gotten)
+    
+    
+    def remove_token_and_sessions(self, object_token) -> None:
+        """
+        This method delete token and sessions of an user
+        
+        Args:
+            object_token (Token): object user's token to delete token and sessions
+
+        Returns:
+            None
+        """
+    
+        sessions = Session.objects.filter(expire_date__gte=datetime.now())
+
+        for session in sessions:
+            
+            session_decoded = session.get_decoded()
+            
+            if int(session_decoded['_auth_user_id'])==object_token.user.id:
+                session.delete()
+            
+        object_token.delete()
