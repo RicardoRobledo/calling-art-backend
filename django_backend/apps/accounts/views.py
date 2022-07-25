@@ -1,5 +1,5 @@
 from django.contrib.sessions.models import Session
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
@@ -126,13 +126,13 @@ class LogoutView(APIView):
 
         if token_gotten.exists():
 
-            self.remove_token_and_sessions(token_gotten.first())
+            logout(request)
+            token_gotten.delete()
             
             message = {
                 'message':'cierre de sesion exitoso'
             }
             status_gotten = status.HTTP_200_OK
-
 
         else:
             
@@ -142,26 +142,3 @@ class LogoutView(APIView):
             status_gotten = status.HTTP_400_BAD_REQUEST
 
         return format_response(message, status_gotten)
-    
-    
-    def remove_token_and_sessions(self, object_token) -> None:
-        """
-        This method delete token and sessions of an user
-        
-        Args:
-            object_token (Token): object user's token to delete token and sessions
-
-        Returns:
-            None
-        """
-
-        sessions = Session.objects.filter(expire_date__gte=datetime.now())
-
-        for session in sessions:
-    
-            session_decoded = session.get_decoded()
-
-            if int(session_decoded['_auth_user_id'])==object_token.user.id:
-                session.delete()
-            
-        object_token.delete()
