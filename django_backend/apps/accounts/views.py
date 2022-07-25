@@ -115,30 +115,42 @@ class LogoutView(APIView):
 
         Returns:
             Our response object formatted
+            
+        Exception:
+            IndexError: It will be generated if a header does not contain a token 
         """
         
-        token_gotten = Token.objects.filter(
-                        key=request.headers['Authorization'][6:]
-                        )
         message = None
         status_gotten = None
+        
+        try:
 
+            token_gotten = Token.objects.filter(
+                            key=request.headers['Authorization'].split()[1]
+                            )
 
-        if token_gotten.exists():
+            if token_gotten.exists():
 
-            logout(request)
-            token_gotten.delete()
-            
+                logout(request)
+                token_gotten.delete()
+                
+                message = {
+                    'message':'cierre de sesion exitoso'
+                }
+                status_gotten = status.HTTP_200_OK
+
+            else:
+                
+                message = {
+                    'message':'error debido a que el token de acceso proporcionado no se encuentra registrado'
+                }
+                status_gotten = status.HTTP_401_UNAUTHORIZED
+        
+        except IndexError:
+
             message = {
-                'message':'cierre de sesion exitoso'
-            }
-            status_gotten = status.HTTP_200_OK
-
-        else:
-            
-            message = {
-                'message':'error debido a que no se encontro el token de acceso'
-            }
+                    'message':'error debido a que no se ha proporcionado el token de acceso'
+                }
             status_gotten = status.HTTP_400_BAD_REQUEST
 
         return format_response(message, status_gotten)
