@@ -1,4 +1,5 @@
 from django.contrib.sessions.models import Session
+from django.contrib.auth import login
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
@@ -8,6 +9,7 @@ from datetime import datetime
 from apps.base.utils import format_response
 from apps.accounts.serializers import UserTokenSerializer
 from apps.users.user_serializers import UserSerializer
+from django_backend.apps.users import user_serializers
 
 
 # ---------------------------------------------
@@ -40,14 +42,15 @@ class LoginView(ObtainAuthToken):
             if user.is_active:
                 
                 token = Token.objects.get_or_create(user=user)[0]
-                user = UserTokenSerializer(user)
+                user_serializer = UserTokenSerializer(user)
+                
+                login(request, user)
 
                 message = {
                     'Token':token.key,
-                    'User':user.data,
+                    'User':user_serializer.data,
                 }
                 status_gotten = status.HTTP_200_OK
-
 
             else:
 
@@ -58,7 +61,6 @@ class LoginView(ObtainAuthToken):
 
             message = {'message':'error en credenciales'}
             status_gotten = status.HTTP_401_UNAUTHORIZED
-
 
         return format_response(message, status_gotten)
 
@@ -96,7 +98,6 @@ class RegisterView(APIView):
             
             message = {'message':'ese usuario ya existe'}
             status_gotten = status.HTTP_400_BAD_REQUEST
-            
 
         return format_response(message, status_gotten)
 
@@ -129,7 +130,7 @@ class LogoutView(APIView):
             self.remove_token_and_sessions(token_gotten.first())
             
             message = {
-                'message':'cierre sesion exitoso'
+                'message':'cierre de sesion exitoso'
             }
             status_gotten = status.HTTP_200_OK
 
@@ -140,7 +141,6 @@ class LogoutView(APIView):
                 'message':'error debido a que no se encontro el token de acceso'
             }
             status_gotten = status.HTTP_400_BAD_REQUEST
-
 
         return format_response(message, status_gotten)
     
@@ -155,14 +155,23 @@ class LogoutView(APIView):
         Returns:
             None
         """
-    
+
         sessions = Session.objects.filter(expire_date__gte=datetime.now())
 
+        for i in Session.objects.all():
+            print(i)
+        print()
+
+
         for session in sessions:
-            
+    
             session_decoded = session.get_decoded()
+            #print(f'token:{object_token}, user:{object_token.user}')
+            #print(session_decoded)
+            #print(int(session_decoded['_auth_user_id'])==object_token.user.id)
+
+            #if int(session_decoded['_auth_user_id'])==object_token.user.id:
+                #session.delete()
+            #    pass
             
-            if int(session_decoded['_auth_user_id'])==object_token.user.id:
-                session.delete()
-            
-        object_token.delete()
+        #object_token.delete()
