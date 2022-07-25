@@ -9,7 +9,6 @@ from datetime import datetime
 from apps.base.utils import format_response
 from apps.accounts.serializers import UserTokenSerializer
 from apps.users.user_serializers import UserSerializer
-from django_backend.apps.users import user_serializers
 
 
 # ---------------------------------------------
@@ -158,20 +157,11 @@ class LogoutView(APIView):
 
         sessions = Session.objects.filter(expire_date__gte=datetime.now())
 
-        for i in Session.objects.all():
-            print(i)
-        print()
-
-
         for session in sessions:
     
             session_decoded = session.get_decoded()
-            #print(f'token:{object_token}, user:{object_token.user}')
-            #print(session_decoded)
-            #print(int(session_decoded['_auth_user_id'])==object_token.user.id)
 
-            #if int(session_decoded['_auth_user_id'])==object_token.user.id:
-                #session.delete()
-            #    pass
+            if int(session_decoded['_auth_user_id'])==object_token.user.id:
+                session.delete()
             
-        #object_token.delete()
+        object_token.delete()
