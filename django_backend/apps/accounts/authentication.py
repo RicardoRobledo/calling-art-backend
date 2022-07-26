@@ -16,7 +16,8 @@ class TokenAuthenticationManager:
     This class manage a token expired to refresh it
     """
 
-    pass
+    def refresh_token(self, token):
+        pass
 
 
 class UserTokenAuthentication(TokenAuthentication):
@@ -24,4 +25,8 @@ class UserTokenAuthentication(TokenAuthentication):
     This class define our authentication with tokens
     """    
     
-    pass
+    def authenticate(self, request):
+        """
+        This method verify that the token exists
+        """
+        pass
