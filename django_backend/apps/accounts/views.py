@@ -1,10 +1,8 @@
-from django.contrib.sessions.models import Session
 from django.contrib.auth import login, logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from datetime import datetime
 
 from apps.base.utils import format_response
 from apps.accounts.serializers import UserTokenSerializer
@@ -91,7 +89,7 @@ class RegisterView(APIView):
             Token.objects.get_or_create(user=user)
             
             message = {'message':'usuario creado con exito'}
-            status_gotten = status.HTTP_200_OK
+            status_gotten = status.HTTP_201_CREATED
             
         else:
             
@@ -131,8 +129,8 @@ class LogoutView(APIView):
 
             if token_gotten.exists():
 
-                logout(request)
-                token_gotten.delete()
+                #logout(request)
+                #token_gotten.delete()
                 
                 message = {
                     'message':'cierre de sesion exitoso'
@@ -145,7 +143,7 @@ class LogoutView(APIView):
                     'message':'error debido a que el token de acceso proporcionado no se encuentra registrado'
                 }
                 status_gotten = status.HTTP_401_UNAUTHORIZED
-        
+
         except IndexError:
 
             message = {
