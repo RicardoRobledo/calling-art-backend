@@ -19,11 +19,22 @@ class TokenAuthenticationManager():
     """
 
     def search_token(self, token):
-        pass
+        
+        user = Token.objects.filter(key=token).first()
+        
+        if user:
+            
+            
+            
+            return user
+
+        else:
+
+            return None
+
 
     def refresh_token(self, token):
         pass
-            
 
 
 class UserTokenAuthentication(TokenAuthentication):
@@ -32,10 +43,14 @@ class UserTokenAuthentication(TokenAuthentication):
     
     Attributes:
         manager (TokenAuthenticationManager): object that handle tokens expired
+        token (str): user's token
+        user (User): user object 
     """
 
 
     manager = TokenAuthenticationManager()
+    token = None
+    user = None
     
 
     def authenticate(self, request):
@@ -50,7 +65,8 @@ class UserTokenAuthentication(TokenAuthentication):
 
             token = request.headers['Authorization'].split()[1]
 
-            self.manager.search_token(token)
-
         except IndexError:
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
+
+        
+        user = self.manager.search_token(token)
