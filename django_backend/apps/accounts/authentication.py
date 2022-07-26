@@ -28,10 +28,21 @@ class UserTokenAuthentication(TokenAuthentication):
         manager (TokenAuthenticationManager): object that handle tokens expired
     """    
 
+
     manager = TokenAuthenticationManager()
+
 
     def authenticate(self, request):
         """
         This method verify that the token exists
+
+        Raises:
+            AuthenticationFailed: tell us that our request does not contain a token 
         """
-        pass
+        
+        try:
+            token = request.headers['Authorization'].split()[1]
+            self.manager.refresh_token(token)
+        except:
+            raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
+
