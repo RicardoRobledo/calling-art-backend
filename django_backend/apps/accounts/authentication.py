@@ -23,8 +23,13 @@ class TokenAuthenticationManager:
 class UserTokenAuthentication(TokenAuthentication):
     """
     This class define our authentication with tokens
-    """    
     
+    Attributes:
+        manager (TokenAuthenticationManager): object that handle tokens expired
+    """    
+
+    manager = TokenAuthenticationManager()
+
     def authenticate(self, request):
         """
         This method verify that the token exists
