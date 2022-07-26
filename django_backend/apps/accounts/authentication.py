@@ -18,9 +18,24 @@ class TokenAuthenticationManager():
     This class manage a token expired to refresh it
     """
 
-    def search_token(self, token):
+
+    def __init__(self):
+        self.__token:str = None
         
-        user = Token.objects.filter(key=token).first()
+    
+    @property
+    def token(self) -> str:
+        return self.__token
+    
+    
+    @token.setter
+    def token(self, token) -> None:
+        self.__token = token
+
+
+    def search_token(self):
+        
+        user = Token.objects.filter(key=self.__token).first()
         
         if user:
             
@@ -33,8 +48,13 @@ class TokenAuthenticationManager():
             return None
 
 
-    def refresh_token(self, token):
+    def token(self):
         pass
+
+
+    def refresh_token(self):
+        pass
+
 
 
 class UserTokenAuthentication(TokenAuthentication):
@@ -63,10 +83,9 @@ class UserTokenAuthentication(TokenAuthentication):
         
         try:
 
-            token = request.headers['Authorization'].split()[1]
+            self.token = request.headers['Authorization'].split()[1]
 
         except IndexError:
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
 
-        
-        user = self.manager.search_token(token)
+        self.user = self.manager.search_token()
