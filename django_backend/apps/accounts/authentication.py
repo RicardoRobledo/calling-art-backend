@@ -48,7 +48,7 @@ class TokenAuthenticationManager():
             return None
 
 
-    def token(self):
+    def is_expired(self):
         pass
 
 
