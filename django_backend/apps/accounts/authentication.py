@@ -57,8 +57,7 @@ class TokenAuthenticationManager():
             # case 2: token is expired
             if self.is_expired(token_validated):
                 
-                self.refresh_token()
-                print("Expirado")
+                self.refresh_token(token_validated)
             
             else:
                 
@@ -88,6 +87,11 @@ class TokenAuthenticationManager():
         token_creation_minute = token_created.minute
         past_minutes = None
 
+        
+        if(time.year>token_created.year or
+           time.month>token_created.month or
+           time.day>token_created.day):
+            return True
 
         if actual_minute<token_creation_minute:
             past_minutes = 60-token_creation_minute+actual_minute            
@@ -100,9 +104,12 @@ class TokenAuthenticationManager():
         return False
 
 
-    def refresh_token(self):
+    def refresh_token(self, token:Token):
         """
         This method replace our old token by a new one
+        
+        Args:
+            token (Token): token object expired
         """
         pass
 
