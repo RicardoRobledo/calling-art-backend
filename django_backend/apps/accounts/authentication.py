@@ -2,6 +2,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import exceptions
 
 from rest_framework.authtoken.models import Token
+from django.conf import settings
 
 
 __author__ = 'Ricardo'
@@ -41,17 +42,19 @@ class TokenAuthenticationManager():
             An user found
         """
         
-        token_validated = Token.objects.select_related('user').filter(key=self.__token).first()
+        self.__token = Token.objects.select_related('user').filter(key=self.__token).first()
         
         # case 1: token exists
-        if token_validated:
+        if self.__token:
+            
+            print(self.__token)
             
             # case 2: token is expired
             if self.is_expired():
                 
                 self.refresh_token()
 
-            return token_validated
+            return self.__token
 
         else:
 
@@ -66,7 +69,8 @@ class TokenAuthenticationManager():
             A boolean that tell us if a token is expired
         """
         
-        self.__token
+        settings.TOKEN_EXPIRATION_TIME
+        print(self.__token.created)
         
         return True
 
@@ -94,16 +98,18 @@ class UserTokenAuthentication(TokenAuthentication):
         Raises:
             IndexError: tell us that our request does not contain a token 
         """
+        
+        token = None
 
         try:
 
-            self.manager.token = request.headers['Authorization'].split()[1]
+            token = request.headers['Authorization'].split()[1]
 
         except IndexError:
 
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
 
-        user = self.manager.search_token()
+        user = self.manager.search_token(token)
         
         if not user is None:
         
