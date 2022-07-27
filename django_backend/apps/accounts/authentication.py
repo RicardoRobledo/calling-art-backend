@@ -29,49 +29,61 @@ class TokenAuthenticationManager():
     
     
     @token.setter
-    def token(self, token) -> None:
+    def token(self, token:str) -> None:
         self.__token = token
 
 
     def search_token(self):
+        """
+        This method look for an user with a specific token
+
+        Returns:
+            An user found
+        """
         
-        user = Token.objects.filter(key=self.__token).first()
+        token_validated = Token.objects.select_related('user').filter(key=self.__token).first()
         
-        if user:
+        # case 1: token exists
+        if token_validated:
             
-            
-            
-            return user
+            # case 2: token is expired
+            if self.is_expired():
+                
+                self.refresh_token()
+
+            return token_validated
 
         else:
 
             return None
 
 
-    def is_expired(self):
-        pass
+    def is_expired(self) -> bool:
+        """
+        This method verify wether if a token given is expired
+        
+        Returns:
+            A boolean that tell us if a token is expired
+        """
+        
+        return True
 
 
     def refresh_token(self):
+        """
+        This method replace our old token by a new one
+        """
         pass
-
 
 
 class UserTokenAuthentication(TokenAuthentication):
     """
     This class define our authentication with tokens
-    
-    Attributes:
-        manager (TokenAuthenticationManager): object that handle tokens expired
-        token (str): user's token
-        user (User): user object 
     """
 
 
     manager = TokenAuthenticationManager()
-    token = None
-    user = None
-    
+
 
     def authenticate(self, request):
         """
@@ -80,12 +92,22 @@ class UserTokenAuthentication(TokenAuthentication):
         Raises:
             IndexError: tell us that our request does not contain a token 
         """
-        
+
         try:
 
-            self.token = request.headers['Authorization'].split()[1]
+            self.manager.token = request.headers['Authorization'].split()[1]
 
         except IndexError:
+
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
 
-        self.user = self.manager.search_token()
+        user = self.manager.search_token()
+        
+        if not user is None:
+        
+            print('Si')
+        
+        else:
+        
+            print('No')
+    
