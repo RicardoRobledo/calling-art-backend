@@ -1,8 +1,9 @@
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import exceptions
-
 from rest_framework.authtoken.models import Token
+from django.utils import timezone
 from django.conf import settings
+from datetime import timedelta
 
 
 __author__ = 'Ricardo'
@@ -25,8 +26,8 @@ class TokenAuthenticationManager():
 
     def __init__(self):
         self.__token:Token = None
-        
-    
+
+
     @property
     def token(self) -> Token:
         return self.__token
@@ -37,7 +38,7 @@ class TokenAuthenticationManager():
         self.__token = token
 
 
-    def search_token(self, token):
+    def search_token(self, token:str):
         """
         This method look for an user with a specific token
         
@@ -48,37 +49,55 @@ class TokenAuthenticationManager():
             An user found
         """
         
-        self.__token = Token.objects.select_related('user').filter(key=token).first()
+        token_validated = Token.objects.select_related('user').filter(key=token).first()
         
         # case 1: token exists
-        if self.__token:
-            
-            print(self.__token)
-            
+        if token_validated:
+
             # case 2: token is expired
-            if self.is_expired():
+            if self.is_expired(token_validated):
                 
                 self.refresh_token()
+                print("Expirado")
+            
+            else:
+                
+                print("No expirado")
 
-            return self.__token
+            return token_validated
 
         else:
 
             return None
 
 
-    def is_expired(self) -> bool:
+    def is_expired(self, token:Token) -> bool:
         """
         This method verify wether if a token given is expired
+        
+        Args:
+            token (Token): Token object found
         
         Returns:
             A boolean that tell us if a token is expired
         """
-        
-        settings.TOKEN_EXPIRATION_TIME
-        print(self.__token.created)
-        
-        return True
+
+        token_created = token.created
+        time = timezone.now()
+        actual_minute = time.minute
+        token_creation_minute = token_created.minute
+        past_minutes = None
+
+
+        if actual_minute<token_creation_minute:
+            past_minutes = 60-token_creation_minute+actual_minute            
+        else:
+            past_minutes = actual_minute-token_creation_minute
+
+        if past_minutes>=settings.TOKEN_EXPIRATION_TIME:
+            return True
+
+        return False
 
 
     def refresh_token(self):
