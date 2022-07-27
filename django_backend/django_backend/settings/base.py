@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from xml.dom.expatbuilder import ExpatBuilderNS
 from decouple import config
 
 
@@ -137,3 +138,5 @@ REST_FRAMEWORK = {
         'apps.accounts.authentication.UserTokenAuthentication',
     ]
 }
+
+TOKEN_EXPIRATION_TIME = 900

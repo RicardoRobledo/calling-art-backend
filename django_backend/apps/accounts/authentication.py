@@ -66,6 +66,8 @@ class TokenAuthenticationManager():
             A boolean that tell us if a token is expired
         """
         
+        self.__token
+        
         return True
 
 
