@@ -17,32 +17,38 @@ __version__ = '0.1'
 class TokenAuthenticationManager():
     """
     This class manage a token expired to refresh it
+
+    Attributes:
+        token (Token): Token object
     """
 
 
     def __init__(self):
-        self.__token:str = None
+        self.__token:Token = None
         
     
     @property
-    def token(self) -> str:
+    def token(self) -> Token:
         return self.__token
     
     
     @token.setter
-    def token(self, token:str) -> None:
+    def token(self, token:Token) -> None:
         self.__token = token
 
 
-    def search_token(self):
+    def search_token(self, token):
         """
         This method look for an user with a specific token
+        
+        Agrs:
+            token (str): contains a token in string format
 
         Returns:
             An user found
         """
         
-        self.__token = Token.objects.select_related('user').filter(key=self.__token).first()
+        self.__token = Token.objects.select_related('user').filter(key=token).first()
         
         # case 1: token exists
         if self.__token:
