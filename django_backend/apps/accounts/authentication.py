@@ -57,12 +57,8 @@ class TokenAuthenticationManager():
             if self.is_expired(token_validated):
 
                 token_validated = self.refresh_token(token_validated)
-
-            else:
                 
-                pass
-
-            return token_validated
+            return token_validated.user
 
         else:
 
@@ -117,7 +113,7 @@ class TokenAuthenticationManager():
         user = token.user
         token.delete()
 
-        return Token.objects.get_or_create(user=user)
+        return Token.objects.select_related('user').get_or_create(user=user)[0]
 
 
 class UserTokenAuthentication(TokenAuthentication):
@@ -131,7 +127,7 @@ class UserTokenAuthentication(TokenAuthentication):
 
     def authenticate(self, request):
         """
-        This method verify that the token exists
+        This method verify that a token is received
 
         Raises:
             IndexError: tell us that our request does not contain a token 
@@ -140,20 +136,33 @@ class UserTokenAuthentication(TokenAuthentication):
         token = None
 
         try:
-
             token = request.headers['Authorization'].split()[1]
-
+        
         except IndexError:
-
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
 
+        return self.authenticate_credentials(token)
+
+
+    def authenticate_credentials(self, token):
+        """
+        This method verify that the token exists and user is active
+
+        Raises:
+            AuthenticationFailed: tell us that happend one of these 2 things
+                1.- The given token does not exists
+                2.- The user is not active
+        """
+        
         user = self.manager.search_token(token)
         
         if not user is None:
-        
-            pass
-        
+
+            if not user.is_active:
+                raise exceptions.AuthenticationFailed('error, el usuario no esta activo')
+
+            return (user, token)
+            
         else:
-        
-            pass
+            raise exceptions.AuthenticationFailed('error, el token proporcionado no existe')
     
