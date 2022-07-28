@@ -3,7 +3,6 @@ from rest_framework import exceptions
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
 from django.conf import settings
-from datetime import timedelta
 
 
 __author__ = 'Ricardo'
@@ -56,12 +55,12 @@ class TokenAuthenticationManager():
 
             # case 2: token is expired
             if self.is_expired(token_validated):
-                
-                self.refresh_token(token_validated)
-            
+
+                token_validated = self.refresh_token(token_validated)
+
             else:
                 
-                print("No expirado")
+                pass
 
             return token_validated
 
@@ -110,8 +109,15 @@ class TokenAuthenticationManager():
         
         Args:
             token (Token): token object expired
+        
+        Returns:
+            An token object with an updated key
         """
-        pass
+        
+        user = token.user
+        token.delete()
+
+        return Token.objects.get_or_create(user=user)
 
 
 class UserTokenAuthentication(TokenAuthentication):
@@ -145,9 +151,9 @@ class UserTokenAuthentication(TokenAuthentication):
         
         if not user is None:
         
-            print('Si')
+            pass
         
         else:
         
-            print('No')
+            pass
     
