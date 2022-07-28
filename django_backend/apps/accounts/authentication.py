@@ -126,11 +126,15 @@ class UserAuthenticationManager():
 class UserTokenAuthentication(TokenAuthentication):
     """
     This class define our authentication with tokens
+    
+    Attributes:
+        token_manager (TokenAuthenticationManager): object to manage our token authentication
+        user_manager (UserAuthenticationManager): object to manage our user authentication
     """
 
 
-    TokenManager = TokenAuthenticationManager()
-    UserManager = UserAuthenticationManager()
+    token_manager = TokenAuthenticationManager()
+    user_manager = UserAuthenticationManager()
 
 
     def authenticate(self, request):
@@ -144,17 +148,25 @@ class UserTokenAuthentication(TokenAuthentication):
         token = None
 
         try:
+
             token = request.headers['Authorization'].split()[1]
         
         except IndexError:
+        
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
+        
         except KeyError:
-            return None
+            
+            body = request.body.decode().split()
+            user = body[4]
+            password = body[9]
+            
+            return self.authenticate_user(user, password)
 
         return self.authenticate_credentials(token)
 
 
-    def authenticate_credentials(self, token):
+    def authenticate_credentials(self, token:Token) -> tuple:
         """
         This method verify that the token exists and user is active
         
@@ -167,7 +179,7 @@ class UserTokenAuthentication(TokenAuthentication):
                 2.- The user is not active
         """
         
-        user = self.manager.search_token(token)
+        user = self.token_manager.search_token(token)
         
         if not user is None:
 
@@ -178,4 +190,21 @@ class UserTokenAuthentication(TokenAuthentication):
             
         else:
             raise exceptions.AuthenticationFailed('error, el token proporcionado no existe')
+
+
+    def authenticate_user(self, user:str, password:str):
+        """
+        This method verify that the token exists and user is active
+        
+        Args:
+            user (str): user to verify is exists
+            password (str): password to verify if exists
+
+        Raises:
+            AuthenticationFailed: tell us that happend one of these 2 things
+                1.- The given token does not exists
+                2.- The user is not active
+        """
+        
+        pass
     
