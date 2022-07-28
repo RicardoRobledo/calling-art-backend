@@ -120,35 +120,17 @@ class LogoutView(APIView):
         
         message = None
         status_gotten = None
-        
-        try:
 
-            token_gotten = Token.objects.filter(
+        token_gotten = Token.objects.filter(
                             key=request.headers['Authorization'].split()[1]
                             )
 
-            if token_gotten.exists():
-
-                #logout(request)
-                #token_gotten.delete()
+        #logout(request)
+        #token_gotten.delete()
                 
-                message = {
-                    'message':'cierre de sesion exitoso'
-                }
-                status_gotten = status.HTTP_200_OK
-
-            else:
-                
-                message = {
-                    'message':'error debido a que el token de acceso proporcionado no se encuentra registrado'
-                }
-                status_gotten = status.HTTP_401_UNAUTHORIZED
-
-        except IndexError:
-
-            message = {
-                    'message':'error debido a que no se ha proporcionado el token de acceso'
-                }
-            status_gotten = status.HTTP_400_BAD_REQUEST
+        message = {
+            'message':'cierre de sesion exitoso'
+        }
+        status_gotten = status.HTTP_200_OK
 
         return format_response(message, status_gotten)

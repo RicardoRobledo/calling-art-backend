@@ -116,13 +116,21 @@ class TokenAuthenticationManager():
         return Token.objects.select_related('user').get_or_create(user=user)[0]
 
 
+class UserAuthenticationManager():
+    """
+    This class manage a user to authenticate it 
+    """
+    pass
+
+
 class UserTokenAuthentication(TokenAuthentication):
     """
     This class define our authentication with tokens
     """
 
 
-    manager = TokenAuthenticationManager()
+    TokenManager = TokenAuthenticationManager()
+    UserManager = UserAuthenticationManager()
 
 
     def authenticate(self, request):
@@ -140,6 +148,8 @@ class UserTokenAuthentication(TokenAuthentication):
         
         except IndexError:
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
+        except KeyError:
+            return None
 
         return self.authenticate_credentials(token)
 
@@ -147,6 +157,9 @@ class UserTokenAuthentication(TokenAuthentication):
     def authenticate_credentials(self, token):
         """
         This method verify that the token exists and user is active
+        
+        Args:
+            token (Token): token object to verify
 
         Raises:
             AuthenticationFailed: tell us that happend one of these 2 things
