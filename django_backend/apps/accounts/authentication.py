@@ -4,6 +4,8 @@ from rest_framework.authtoken.models import Token
 from django.utils import timezone
 from django.conf import settings
 
+from apps.users.user_serializers import UserSerializer
+
 
 __author__ = 'Ricardo'
 __version__ = '0.1'
@@ -116,13 +118,6 @@ class TokenAuthenticationManager():
         return Token.objects.select_related('user').get_or_create(user=user)[0]
 
 
-class UserAuthenticationManager():
-    """
-    This class manage a user to authenticate it 
-    """
-    pass
-
-
 class UserTokenAuthentication(TokenAuthentication):
     """
     This class define our authentication with tokens
@@ -154,14 +149,6 @@ class UserTokenAuthentication(TokenAuthentication):
         except IndexError:
         
             raise exceptions.AuthenticationFailed('error, no se ha proporcionado el token')
-        
-        except KeyError:
-            
-            body = request.body.decode().split()
-            user = body[4]
-            password = body[9]
-            
-            return self.authenticate_user(user, password)
 
         return self.authenticate_credentials(token)
 
@@ -190,21 +177,3 @@ class UserTokenAuthentication(TokenAuthentication):
             
         else:
             raise exceptions.AuthenticationFailed('error, el token proporcionado no existe')
-
-
-    def authenticate_user(self, user:str, password:str):
-        """
-        This method verify that the token exists and user is active
-        
-        Args:
-            user (str): user to verify is exists
-            password (str): password to verify if exists
-
-        Raises:
-            AuthenticationFailed: tell us that happend one of these 2 things
-                1.- The given token does not exists
-                2.- The user is not active
-        """
-        
-        pass
-    

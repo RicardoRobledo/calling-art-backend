@@ -12,6 +12,24 @@ __version__ = "0.1"
 # -------------------------------------------------------------
 
 
+class UserSerializer2(serializers.ModelSerializer):
+    """
+    This class seralize our User model
+    """
+    
+    class Meta:
+        """
+        This inner class define our fields to show and our model to use
+        
+        Attributes:
+            model (User): User instance to make reference
+            field tuple(str): fields to show
+        """
+        
+        model: User = User
+        fields: tuple = ('username', 'password')
+
+
 class UserSerializer(serializers.ModelSerializer):
     """
     This class seralize our User model
