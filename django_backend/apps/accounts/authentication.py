@@ -4,8 +4,6 @@ from rest_framework.authtoken.models import Token
 from django.utils import timezone
 from django.conf import settings
 
-from apps.users.user_serializers import UserSerializer
-
 
 __author__ = 'Ricardo'
 __version__ = '0.1'
@@ -129,7 +127,6 @@ class UserTokenAuthentication(TokenAuthentication):
 
 
     token_manager = TokenAuthenticationManager()
-    user_manager = UserAuthenticationManager()
 
 
     def authenticate(self, request):
