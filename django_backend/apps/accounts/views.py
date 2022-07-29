@@ -2,7 +2,6 @@ from django.contrib.auth import login, logout
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 
 from apps.base.utils import format_response
 from apps.accounts.serializers import UserTokenSerializer
@@ -38,13 +37,12 @@ class LoginView(ObtainAuthToken):
             # case 2: user is active
             if user.is_active:
                 
-                token = Token.objects.get_or_create(user=user)[0]
                 user_serializer = UserTokenSerializer(user)
                 
                 login(request, user)
 
                 message = {
-                    'Token':token.key,
+                    'Token':'',
                     'User':user_serializer.data,
                 }
                 status_gotten = status.HTTP_200_OK
@@ -86,7 +84,6 @@ class RegisterView(APIView):
         if register_serializer.is_valid():
             
             user = register_serializer.save()
-            Token.objects.get_or_create(user=user)
             
             message = {'message':'usuario creado con exito'}
             status_gotten = status.HTTP_201_CREATED
@@ -121,9 +118,9 @@ class LogoutView(APIView):
         message = None
         status_gotten = None
 
-        token_gotten = Token.objects.filter(
-                            key=request.headers['Authorization'].split()[1]
-                            )
+        #token_gotten = Token.objects.filter(
+        #                    key=request.headers['Authorization'].split()[1]
+        #                    )
 
         #logout(request)
         #token_gotten.delete()
