@@ -39,6 +39,7 @@ THIRD_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
+    'corsheaders',
 ]
 
 MY_APPS = [
@@ -47,9 +48,12 @@ MY_APPS = [
     'apps.accounts',
 ]
 
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies" 
+
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+#SESSION_COOKIE_HTTPONLY = True
 
 ROOT_URLCONF = 'django_backend.urls'
 

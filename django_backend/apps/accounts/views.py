@@ -66,6 +66,8 @@ class LoginView(ObtainAuthToken):
 
 
 class RegisterView(APIView):
+    
+    permission_classes = ()
 
 
     def post(self, request, *args, **kwargs):
@@ -118,8 +120,7 @@ class LogoutView(APIView):
         message = None
         status_gotten = None
 
-        #logout(request)
-        #token_gotten.delete()
+        logout(request)
                 
         message = {
             'message':'cierre de sesion exitoso'
