@@ -118,10 +118,6 @@ class LogoutView(APIView):
         message = None
         status_gotten = None
 
-        #token_gotten = Token.objects.filter(
-        #                    key=request.headers['Authorization'].split()[1]
-        #                    )
-
         #logout(request)
         #token_gotten.delete()
                 
