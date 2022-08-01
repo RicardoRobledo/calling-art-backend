@@ -2,9 +2,11 @@ from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from apps.base.utils import format_response
+from apps.users.models import User
 from apps.users.user_serializers import UserSerializer, UserTokenSerializer
 
 
@@ -126,11 +128,26 @@ class LogoutView(APIView):
         message = None
         status_gotten = None
 
-        #logout(request)
+        
+        user = User.objects.filter(username=request.data.get('username')).first()
+
+
+        if user.exists():
+            
+            RefreshToken.for_user(user)
+            logout(request)
                 
+            message = {
+                'message':'cierre de sesion exitoso'
+            }
+            status_gotten = status.HTTP_200_OK
+            
+            return format_response(message, status_gotten)
+
+
         message = {
-            'message':'cierre de sesion exitoso'
+            'message':'error that user does not exists'
         }
-        status_gotten = status.HTTP_200_OK
+        status_gotten = status.HTTP_401_UNAUTHORIZED
 
         return format_response(message, status_gotten)
