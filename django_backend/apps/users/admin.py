@@ -6,11 +6,11 @@ from .models import User
 
 class UserAdmin(BaseUserAdmin):
     
-    list_display = ('id', 'username',)
+    list_display = ('id', 'username', 'is_active')
     
     fieldsets = (
     (
-        None, {'fields': ('username', 'password')}),
+        None, {'fields': ('username', 'password', 'is_active')}),
     )
 
 

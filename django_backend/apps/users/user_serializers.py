@@ -12,7 +12,7 @@ __version__ = "0.1"
 # -------------------------------------------------------------
 
 
-class UserSerializer2(serializers.ModelSerializer):
+class UserTokenSerializer(serializers.ModelSerializer):
     """
     This class seralize our User model
     """
@@ -27,7 +27,7 @@ class UserSerializer2(serializers.ModelSerializer):
         """
         
         model: User = User
-        fields: tuple = ('username', 'password')
+        fields: tuple = ('username', 'email', 'description', 'icon',)
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -1,11 +1,11 @@
-from django.contrib.auth import login, logout
-from rest_framework.authtoken.views import ObtainAuthToken
+from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from apps.base.utils import format_response
-from apps.accounts.serializers import UserTokenSerializer
-from apps.users.user_serializers import UserSerializer
+from apps.users.user_serializers import UserSerializer, UserTokenSerializer
 
 
 # ---------------------------------------------
@@ -13,10 +13,12 @@ from apps.users.user_serializers import UserSerializer
 # ---------------------------------------------
 
 
-class LoginView(ObtainAuthToken):
+class LoginView(TokenObtainPairView):
+    
+    serializer_class = TokenObtainPairSerializer
 
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         """
         This method is for do login
 
@@ -29,33 +31,37 @@ class LoginView(ObtainAuthToken):
         status_gotten = None
 
 
-        # case 1: data are valid
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+
+
+        user = authenticate(
+            username=request.data.get('username'),
+            password=request.data.get('password')
+        )
+
+  
         if login_serializer.is_valid():
 
-            user = login_serializer.validated_data['user']
-            
-            # case 2: user is active
-            if user.is_active:
-                
-                user_serializer = UserTokenSerializer(user)
-                
-                login(request, user)
+            user_token_serializer = UserTokenSerializer(user)
+        
+            login(request, user)
 
-                message = {
-                    'Token':'',
-                    'User':user_serializer.data,
-                }
-                status_gotten = status.HTTP_200_OK
+            message = {
+                'user':user_token_serializer.data,
+            }
+            status_gotten = status.HTTP_200_OK
 
-            else:
+            response = format_response(message, status_gotten)
+            response.set_cookie(key='jwt', value=login_serializer.validated_data)
 
-                message = {'message':'error debibo a que ese usuario no esta activo'},
-                status_gotten = status.HTTP_401_UNAUTHORIZED
+            return response
 
-        else:
 
-            message = {'message':'error en credenciales'}
-            status_gotten = status.HTTP_401_UNAUTHORIZED
+        message = {
+            'message':'error in type of data',
+        }
+        status_gotten = status.HTTP_401_UNAUTHORIZED
 
         return format_response(message, status_gotten)
 
@@ -120,7 +126,7 @@ class LogoutView(APIView):
         message = None
         status_gotten = None
 
-        logout(request)
+        #logout(request)
                 
         message = {
             'message':'cierre de sesion exitoso'
