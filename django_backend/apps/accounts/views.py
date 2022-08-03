@@ -2,7 +2,6 @@ from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from apps.base.utils import format_response
@@ -53,7 +52,7 @@ class LoginView(TokenObtainPairView):
                 'user':user_token_serializer.data,
             }
             status_gotten = status.HTTP_200_OK
-
+            
             response = format_response(message, status_gotten)
             response.set_cookie(key='jwt', value=login_serializer.validated_data)
 
@@ -85,22 +84,34 @@ class RegisterView(APIView):
         Returns:
             Our response object formatted
         """
-        
-        register_serializer = UserSerializer(data=request.data)
+
         message = None
         status_gotten = None
+        register_serializer = UserSerializer(data=request.data)
         
+        user = User.objects.filter(username=request.data['username']).exists()
+        email = User.objects.filter(email=request.data['email']).exists()
 
-        if register_serializer.is_valid():
-            
-            user = register_serializer.save()
-            
+        if user:
+
+            message = {'message':'Ese usuario ya esta registrado'}
+            status_gotten = status.HTTP_400_BAD_REQUEST
+        
+        elif email:
+        
+            message = {'message':'Ese correo ya esta registrado'}
+            status_gotten = status.HTTP_400_BAD_REQUEST
+        
+        elif register_serializer.is_valid():
+
+            register_serializer.save()
+
             message = {'message':'usuario creado con exito'}
             status_gotten = status.HTTP_201_CREATED
             
         else:
             
-            message = {'message':'ese usuario ya existe'}
+            message = {'message':'Registro incorrecto'}
             status_gotten = status.HTTP_400_BAD_REQUEST
 
         return format_response(message, status_gotten)
@@ -129,12 +140,11 @@ class LogoutView(APIView):
         status_gotten = None
 
         
-        user = User.objects.filter(username=request.data.get('username')).first()
+        user = User.objects.filter(username=request.data.get('username'))
 
 
         if user.exists():
-            
-            RefreshToken.for_user(user)
+
             logout(request)
                 
             message = {
