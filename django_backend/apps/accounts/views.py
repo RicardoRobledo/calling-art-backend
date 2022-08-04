@@ -92,6 +92,7 @@ class RegisterView(APIView):
         user = User.objects.filter(username=request.data['username']).exists()
         email = User.objects.filter(email=request.data['email']).exists()
 
+
         if user:
 
             message = {'message':'Ese usuario ya esta registrado'}

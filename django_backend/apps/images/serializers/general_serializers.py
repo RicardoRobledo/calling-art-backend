@@ -58,10 +58,7 @@ class ImageCategorySerializer(serializers.ModelSerializer):
 
 
     #category = CategorySerializer()
-    category = serializers.PrimaryKeyRelatedField(
-        queryset=Category.objects.all(),
-        many=True,
-    )
+    category: int = serializers.IntegerField(source="category.id")
     image: int = serializers.IntegerField(source="image.id")
 
 
@@ -92,5 +89,7 @@ class ImageCategorySerializer(serializers.ModelSerializer):
         """
 
 
+        validated_data['category'] = Category.objects.get(id=validated_data['category']['id'])
         validated_data['image'] = Image.objects.get(id=validated_data['image']['id'])
+        
         return ImageCategory.objects.create(**validated_data)
