@@ -49,6 +49,20 @@ class UserSerializer(serializers.ModelSerializer):
 
 
     def to_representation(self, instance):
+        
+        images: list = [
+            {
+                image.title :{
+                    'id': image.id,
+                    'description': image.description,
+                    'link': image.link,
+                }
+            }
+            for image in self.Meta.model.objects.get(id=instance.id).image_set.all()
+        ]
+        
+        print(images)
+        
         return {
             'id': instance.id,
             'username': instance.username,
@@ -57,6 +71,7 @@ class UserSerializer(serializers.ModelSerializer):
             'description': instance.description,
             'icon': instance.icon,
             'created_at': instance.created_at,
+            'images': images, 
         }
 
 

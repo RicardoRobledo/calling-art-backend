@@ -56,7 +56,6 @@ class ImageCategorySerializer(serializers.ModelSerializer):
         image (int): integer of a image's foreign key 
     """
 
-
     #category = CategorySerializer()
     category: int = serializers.IntegerField(source="category.id")
     image: int = serializers.IntegerField(source="image.id")
@@ -70,7 +69,6 @@ class ImageCategorySerializer(serializers.ModelSerializer):
             model (ImageCategory): image category instance to make reference
             field tuple(str): fields to show
         """
-
 
         model: ImageCategory = ImageCategory
         fields: str = '__all__'
