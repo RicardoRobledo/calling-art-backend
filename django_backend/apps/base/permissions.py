@@ -13,5 +13,15 @@ class IsOwnerUserOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        # Instance must have an attribute named `owner`.
+        # Instance must have an attribute named `username`.
         return obj.username == request.user.username
+
+
+class IsOwnerImageOrReadOnly(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, obj):
+        
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.user.username == request.user.username
