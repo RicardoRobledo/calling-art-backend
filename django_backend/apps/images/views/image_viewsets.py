@@ -16,6 +16,6 @@ __version__ = "0.1"
 
 class ImageViewSet(viewsets.ModelViewSet):
     
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, )
     queryset =  Image.objects.all()
     serializer_class = ImageSerializer

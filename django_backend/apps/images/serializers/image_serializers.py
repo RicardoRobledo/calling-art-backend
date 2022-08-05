@@ -44,12 +44,13 @@ class ImageSerializer(serializers.ModelSerializer):
         """
 
         categories: list = [
-            {index: imagecategory.category.category}
-            for index, imagecategory in enumerate(ImageCategory.objects.filter(image=instance.id))
+            imagecategory.category.category
+            for imagecategory in ImageCategory.objects.filter(image=instance.id)
         ]
 
         return {
             'id': instance.id,
+            'created_by': instance.user.username,
             'title': instance.title,
             'description': instance.description,
             'link': instance.link,
