@@ -49,6 +49,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
     def to_representation(self, instance):
+        """
+        This method return us our json representation
+        """
         
         images: list = [
             {
@@ -60,9 +63,7 @@ class UserSerializer(serializers.ModelSerializer):
             }
             for image in self.Meta.model.objects.get(id=instance.id).image_set.all()
         ]
-        
-        print(images)
-        
+
         return {
             'id': instance.id,
             'username': instance.username,

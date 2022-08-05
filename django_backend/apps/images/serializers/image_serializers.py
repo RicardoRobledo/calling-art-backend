@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.users.models import User
-from ..models import Image
+from ..models import Image, ImageCategory
 
 
 __author__ = "Ricardo Robledo"
@@ -36,6 +36,26 @@ class ImageSerializer(serializers.ModelSerializer):
         
         model: Image = Image
         fields: tuple = ('id', 'title', 'link', 'description', 'created_at', 'user',)
+
+
+    def to_representation(self, instance):
+        """
+        This method return us our Json representation
+        """
+
+        categories: list = [
+            {index: imagecategory.category.category}
+            for index, imagecategory in enumerate(ImageCategory.objects.filter(image=instance.id))
+        ]
+
+        return {
+            'id': instance.id,
+            'title': instance.title,
+            'description': instance.description,
+            'link': instance.link,
+            'created_at': instance.created_at,
+            'categories': categories,
+        }
 
 
     # This method save our updated model with the user stablished
