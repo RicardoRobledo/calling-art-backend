@@ -1,5 +1,5 @@
-from django.contrib.auth import login, logout, authenticate
 from django.conf import settings
+from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -96,24 +96,24 @@ class RegisterView(APIView):
 
         if user:
 
-            message = {'message':'Ese usuario ya esta registrado'}
+            message = {'message':'that user already exists'}
             status_gotten = status.HTTP_400_BAD_REQUEST
         
         elif email:
         
-            message = {'message':'Ese correo ya esta registrado'}
+            message = {'message':'that email already exists'}
             status_gotten = status.HTTP_400_BAD_REQUEST
         
         elif register_serializer.is_valid():
 
             register_serializer.save()
 
-            message = {'message':'usuario creado con exito'}
+            message = {'message':'user created'}
             status_gotten = status.HTTP_201_CREATED
             
         else:
             
-            message = {'message':'Registro incorrecto'}
+            message = {'message':'wrong record'}
             status_gotten = status.HTTP_400_BAD_REQUEST
 
         return format_response(message, status_gotten)
@@ -149,7 +149,7 @@ class LogoutView(APIView):
 
             #RefreshToken.for_user(user.first())
             logout(request)
-                
+
             message = {
                 'message':'logout sucess'
             }

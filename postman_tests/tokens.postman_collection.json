@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "af3a2ea0-a5c6-49d4-9e00-e046e6069f67",
+		"name": "tokens",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "token_refresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "kyo",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kofxv",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/?refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1OTgyOTY0NCwiaWF0IjoxNjU5NzQzMjQ0LCJqdGkiOiI1MTAwNmUxZjk0MmI0NmM4YTc2N2NmYjVkN2I3MDQ2ZSIsInVzZXJfaWQiOjEyfQ.MN5JNinhi4SvWLh-iTtF8a_HqK0fs6kgqzlapuJI8UE",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						""
+					],
+					"query": [
+						{
+							"key": "refresh",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY1OTgyOTY0NCwiaWF0IjoxNjU5NzQzMjQ0LCJqdGkiOiI1MTAwNmUxZjk0MmI0NmM4YTc2N2NmYjVkN2I3MDQ2ZSIsInVzZXJfaWQiOjEyfQ.MN5JNinhi4SvWLh-iTtF8a_HqK0fs6kgqzlapuJI8UE"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "kyo",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kofxv",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/token/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"token",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

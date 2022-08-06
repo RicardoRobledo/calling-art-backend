@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "60804035-0cdd-484b-b9a3-ef13ed40e8a4",
+		"name": "accounts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU5NzQ0MTQ0LCJpYXQiOjE2NTk3NDMyNDQsImp0aSI6IjM2MjFmMDY2ZmYxZjRlMzdiODY5OWRiNDVkYzBlYjYyIiwidXNlcl9pZCI6MTJ9.aiC3MPk3Zv6Lc6yFxmkRS0s8jICvvuUVLylpgk_Id6s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "kyo",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kofxv",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/acc/logout/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"acc",
+						"logout",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU5NzQzNTYyLCJpYXQiOjE2NTk3NDI2NjIsImp0aSI6IjlhNzMxMTNhMzJiNDQ2NzU5OTEzM2EwMmU4MTFmMzI0IiwidXNlcl9pZCI6MTJ9.c9pfGH5Z1I7tBX9jizJJt8STqSnCl5yv66IUw1gxC78",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "kyo",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kofxv",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/acc/login/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"acc",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "robert",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kofxv",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "rob@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "description",
+							"value": "soy un peleador",
+							"type": "default"
+						},
+						{
+							"key": "icon",
+							"value": "rob.png",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/acc/register/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"acc",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "9f2f5458-72dc-42d5-8f4a-db74f59711ce",
+		"name": "users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU5NzQ2MzUwLCJpYXQiOjE2NTk3NDU0NTAsImp0aSI6Ijk3Y2E5ZDBmNGYwYTQzNTliYWU1MzNmOTk4YTM2ZTM4IiwidXNlcl9pZCI6MTJ9.Zp0tH0SpjHrNWKJGkA2yHkPpG3svQ92uHRaRYEP2QFU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/usr/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"usr",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU5NzQ2MzUwLCJpYXQiOjE2NTk3NDU0NTAsImp0aSI6Ijk3Y2E5ZDBmNGYwYTQzNTliYWU1MzNmOTk4YTM2ZTM4IiwidXNlcl9pZCI6MTJ9.Zp0tH0SpjHrNWKJGkA2yHkPpG3svQ92uHRaRYEP2QFU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/usr/users/18/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"usr",
+						"users",
+						"18",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/usr/users/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"usr",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjU5NzMzOTUyLCJpYXQiOjE2NTk3MzMwNTIsImp0aSI6IjY4ZmFlYWYzYjUyZTQwODA5NjljMzIyMmZiYjc3Njk0IiwidXNlcl9pZCI6MTJ9.eJTyo8WqEal4ob7D6ToEiyNayllZMjPCy5V-h0I2jMw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "kyo",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "kofxv",
+							"type": "default"
+						},
+						{
+							"key": "email",
+							"value": "kof@gmail.com",
+							"type": "default"
+						},
+						{
+							"key": "description",
+							"value": "soy un peleador",
+							"type": "default"
+						},
+						{
+							"key": "icon",
+							"value": "kyo.png",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/usr/users/12/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"usr",
+						"users",
+						"12",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
