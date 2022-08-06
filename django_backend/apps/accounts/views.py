@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
+from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -54,7 +55,7 @@ class LoginView(TokenObtainPairView):
             status_gotten = status.HTTP_200_OK
             
             response = format_response(message, status_gotten)
-            response.set_cookie(key='jwt', value=login_serializer.validated_data)
+            response.set_cookie(key=settings.COOKIE_NAME, value=login_serializer.validated_data)
 
             return response
 
@@ -155,7 +156,7 @@ class LogoutView(APIView):
             status_gotten = status.HTTP_200_OK
 
             response = format_response(message, status_gotten)
-            response.delete_cookie('jwt')
+            response.delete_cookie(settings.COOKIE_NAME)
 
             return response
 
