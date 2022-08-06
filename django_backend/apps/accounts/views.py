@@ -146,14 +146,18 @@ class LogoutView(APIView):
 
         if user.exists():
 
+            #RefreshToken.for_user(user.first())
             logout(request)
                 
             message = {
-                'message':'cierre de sesion exitoso'
+                'message':'logout sucess'
             }
             status_gotten = status.HTTP_200_OK
-            
-            return format_response(message, status_gotten)
+
+            response = format_response(message, status_gotten)
+            response.delete_cookie('jwt')
+
+            return response
 
 
         message = {

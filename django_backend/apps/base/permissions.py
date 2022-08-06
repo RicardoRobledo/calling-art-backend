@@ -1,6 +1,10 @@
 from rest_framework import permissions
 
 
+__author__ = "Ricardo Robledo"
+__version__ = "0.1"
+
+
 class IsOwnerUserOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
