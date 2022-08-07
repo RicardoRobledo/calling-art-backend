@@ -188,7 +188,7 @@ SWAGGER_SETTINGS = {
             'type': 'apiKey',
             'name': 'Authorization',
             'in': 'header',
-        }
+        },
     },
 
 }

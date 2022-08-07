@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from drf_yasg.utils import swagger_auto_schema
 
 from apps.base.utils import format_response
 from apps.users.models import User
@@ -22,10 +23,11 @@ class LoginView(TokenObtainPairView):
 
     def post(self, request, *args, **kwargs):
         """
-        This method is for do login
-
-        Returns:
-            Our response object formatted
+        Allow us login and get a cookie with our access tokens
+        
+        :param username: username of our user
+        :param password: password of our user
+        :returns: a Response object with a cookie
         """
         
         login_serializer = self.serializer_class(data=request.data)
@@ -80,10 +82,14 @@ class RegisterView(APIView):
 
     def post(self, request, *args, **kwargs):
         """
-        This method is for register our user
-
-        Returns:
-            Our response object formatted
+        Allow us sign up
+        
+        :param username: username of our user
+        :param password: password of our user
+        :param email: email of our user
+        :param description: a description of our user
+        :param icon: icon to show the user 
+        :returns: a response object
         """
 
         message = None
@@ -129,13 +135,7 @@ class LogoutView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        This method is for log out
-
-        Returns:
-            Our response object formatted
-            
-        Exception:
-            IndexError: It will be generated if a header does not contain a token 
+        Allow us logout
         """
         
         message = None

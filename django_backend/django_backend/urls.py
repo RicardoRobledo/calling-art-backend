@@ -26,7 +26,7 @@ from rest_framework_simplejwt.views import (
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Caling Art API",
+      title="Calling Art API",
       default_version='v0.1',
       description="This is calling art documentation",
       terms_of_service="https://www.google.com/policies/terms/",
