@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
+#from rest_framework import filters
 
 from apps.users.models import User
 from apps.users.user_serializers import UserSerializer
@@ -18,7 +19,10 @@ __version__ = "0.1"
 
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description="list our users"
+    operation_description="""
+    :param id: user's primary key
+    :param username: username of our user
+    """
 ))
 @method_decorator(name='create', decorator=swagger_auto_schema(
     operation_description=""" 
@@ -33,7 +37,7 @@ __version__ = "0.1"
     operation_description=":param id: primary key of an user"
 ))
 @method_decorator(name='update', decorator=swagger_auto_schema(
-    operation_description="""" 
+    operation_description="""
     :param username: username of our user
     :param password: password of our user
     :param email: email of our user
@@ -53,4 +57,5 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerUserOrReadOnly,)
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    filterset_fields = ['username']
+    filterset_fields = ['id', 'username']
+    #filter_backends = [filters.SearchFilter]
