@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from drf_yasg.utils import swagger_auto_schema
 
 from apps.base.utils import format_response
 from apps.users.models import User
