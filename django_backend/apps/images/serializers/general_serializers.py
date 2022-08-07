@@ -3,7 +3,6 @@ This module define our serializers
 """
 
 
-from venv import create
 from rest_framework import serializers
 
 from ..models import(
@@ -26,7 +25,6 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     This class serialize our category model
     """
-
 
     class Meta:
         """
@@ -86,8 +84,30 @@ class ImageCategorySerializer(serializers.ModelSerializer):
             An image category instance
         """
 
-
         validated_data['category'] = Category.objects.get(id=validated_data['category']['id'])
         validated_data['image'] = Image.objects.get(id=validated_data['image']['id'])
         
         return ImageCategory.objects.create(**validated_data)
+
+
+    def validate(self, data) -> ImageCategory:
+        """
+        This method verify that does not exist an image category with the same foreign key in
+        category and image
+        
+        Raises:
+            ValidationError 
+        
+        Returns:
+            ImageCategory object validated
+        """
+
+        image_category = ImageCategory.objects.filter(
+            category=data.get('category').get('id'),
+            image=data.get('image').get('id'),
+        )
+
+        if image_category.exists():
+            raise serializers.ValidationError('Error, the image already has that category')
+
+        return image_category
