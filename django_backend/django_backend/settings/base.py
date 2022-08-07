@@ -180,3 +180,13 @@ SIMPLE_JWT = {
 }
 
 COOKIE_NAME = 'jwt_cookie'
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'JWT': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    },
+}
