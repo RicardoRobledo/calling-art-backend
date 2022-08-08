@@ -20,3 +20,4 @@ class ImageViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerImageOrReadOnly,)
     queryset =  Image.objects.all()
     serializer_class = ImageSerializer
+    filterset_fields = ['title']
