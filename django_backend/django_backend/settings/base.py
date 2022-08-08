@@ -50,6 +50,9 @@ MY_APPS = [
     'apps.accounts',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies" 
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS 
