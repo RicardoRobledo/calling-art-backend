@@ -57,5 +57,5 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerUserOrReadOnly,)
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    filterset_fields = ['id', 'username']
+    filterset_fields = ['username']
     #filter_backends = [filters.SearchFilter]
