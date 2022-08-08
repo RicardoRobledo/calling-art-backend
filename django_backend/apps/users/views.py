@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
-#from rest_framework import filters
+import django_filters
 
 from apps.users.models import User
 from apps.users.user_serializers import UserSerializer
@@ -18,8 +18,31 @@ __version__ = "0.1"
 # -------------------------------------------------------------
 
 
+class UserFilter(django_filters.FilterSet):
+    """
+    This class filter our users by username and creation date
+
+    Attributes:
+        created_ate (datetime): creation date
+        username (str): username
+    """
+
+    created_at = django_filters.DateTimeFilter(field_name='created_at', lookup_expr='gte')
+    username = django_filters.CharFilter(field_name='username')
+    
+    class Meta:
+        model = User
+        fields = [
+            'created_at',
+            'username',
+        ]
+
+
 @method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description=':param username: username of our user'
+    operation_description="""
+    :param username: username of our user
+    :param created_at: creation date
+    """
 ))
 @method_decorator(name='create', decorator=swagger_auto_schema(
     operation_description=""" 
@@ -54,5 +77,6 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerUserOrReadOnly,)
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    filterset_fields = ['username']
+    filterset_class = UserFilter
+    #filterset_fields = ['username']
     #filter_backends = [filters.SearchFilter]
