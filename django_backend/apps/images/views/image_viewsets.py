@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
+import django_filters
 
 from apps.base.permissions import IsOwnerImageOrReadOnly
 from apps.images.models import Image
@@ -15,6 +16,23 @@ __version__ = "0.1"
 # -------------------------------------------------------------
 #                       Image view set
 # -------------------------------------------------------------
+
+
+class ImageFilter(django_filters.FilterSet):
+    """
+    This class filter our images by title and creation date
+
+    Attributes:
+        created_ate (datetime): creation date
+        title (str): image title
+    """
+    
+    title = django_filters.CharFilter(field_name='title')
+    created_at = django_filters.DateTimeFilter(field_name='created_at', lookup_expr='gte')
+    
+    class Meta:
+        model = Image
+        fields = ['title', 'created_at']
 
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
@@ -51,4 +69,5 @@ class ImageViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerImageOrReadOnly,)
     queryset =  Image.objects.all()
     serializer_class = ImageSerializer
-    filterset_fields = ['title']
+    filterset_class = ImageFilter
+    #filterset_fields = ['title']
