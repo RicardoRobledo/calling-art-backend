@@ -36,7 +36,10 @@ class ImageFilter(django_filters.FilterSet):
 
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description=':param title: image title'
+    operation_description="""
+    :param title: image title
+    :param created_at: creation date
+    """
 ))
 @method_decorator(name='create', decorator=swagger_auto_schema(
     operation_description="""
