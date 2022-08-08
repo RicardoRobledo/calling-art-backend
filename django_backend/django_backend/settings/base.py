@@ -195,5 +195,15 @@ SWAGGER_SETTINGS = {
             'in': 'header',
         },
     },
+    
+    'DOC_EXPANSION' : 'none',
+
+}
+
+REDOC_SETTINGS = {
+
+    'REQUIRED_PROPS_FIRST': True,
+    'NATIVE_SCROLLBARS': True,
+    'LAZY_RENDERING': False,
 
 }

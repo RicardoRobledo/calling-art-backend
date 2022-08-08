@@ -135,6 +135,8 @@ class LogoutView(APIView):
     def get(self, request, *args, **kwargs):
         """
         Allow us logout
+        
+        :param username: username
         """
         
         message = None
@@ -150,7 +152,7 @@ class LogoutView(APIView):
             logout(request)
 
             message = {
-                'message':'logout sucess'
+                'message':'logout success'
             }
             status_gotten = status.HTTP_200_OK
 
