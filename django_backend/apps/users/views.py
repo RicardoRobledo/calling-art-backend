@@ -19,10 +19,7 @@ __version__ = "0.1"
 
 
 @method_decorator(name='list', decorator=swagger_auto_schema(
-    operation_description="""
-    :param id: user's primary key
-    :param username: username of our user
-    """
+    operation_description=':param username: username of our user'
 ))
 @method_decorator(name='create', decorator=swagger_auto_schema(
     operation_description=""" 
@@ -34,7 +31,7 @@ __version__ = "0.1"
     """
 ))
 @method_decorator(name='retrieve', decorator=swagger_auto_schema(
-    operation_description=":param id: primary key of an user"
+    operation_description=':param id: primary key of an user'
 ))
 @method_decorator(name='update', decorator=swagger_auto_schema(
     operation_description="""
@@ -47,10 +44,10 @@ __version__ = "0.1"
     """
 ))
 @method_decorator(name='partial_update', decorator=swagger_auto_schema(
-    operation_description="partial_update"
+    operation_description='partial_update'
 ))
 @method_decorator(name='destroy', decorator=swagger_auto_schema(
-    operation_description=":param id: primary key of an user"
+    operation_description=':param id: primary key of an user'
 ))
 class UserViewSet(viewsets.ModelViewSet):
     
