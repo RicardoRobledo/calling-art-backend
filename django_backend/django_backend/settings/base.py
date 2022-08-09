@@ -47,9 +47,9 @@ THIRD_APPS = [
 ]
 
 MY_APPS = [
-    'apps.users',
-    'apps.images',
-    'apps.accounts',
+    'users',
+    'images',
+    'accounts',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
