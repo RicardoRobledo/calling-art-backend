@@ -6,6 +6,13 @@ This is an easy API about an app like pinterest to manage users and images
 <br>
 
 
+|<img src="https://github.com/RicardoRobledo/calling-art-backend/blob/main/img1.png">|<img src="https://github.com/RicardoRobledo/calling-art-backend/blob/main/img2.png">|
+| --- | --- |
+
+
+<br>
+
+
 ## Made up with 🛠️
 
 | *Technology* | *Description* |
