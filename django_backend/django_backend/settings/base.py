@@ -47,9 +47,9 @@ THIRD_APPS = [
 ]
 
 MY_APPS = [
-    'django_backend.apps.users',
-    'django_backend.apps.images',
-    'django_backend.apps.accounts',
+    'apps.users',
+    'apps.images',
+    'apps.accounts',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
