@@ -47,7 +47,6 @@ class LoginView(TokenObtainPairView):
         if login_serializer.is_valid():
         
             login(request, user)
-
             status_gotten = status.HTTP_200_OK
 
             return format_response(login_serializer.validated_data, status_gotten)
