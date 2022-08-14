@@ -8,6 +8,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from apps.base.utils import format_response
 from apps.users.models import User
 from apps.users.user_serializers import UserSerializer, UserTokenSerializer
+from apps.accounts.serializers import CustomTokenObtainPairSerializer
 
 
 # ---------------------------------------------
@@ -17,7 +18,7 @@ from apps.users.user_serializers import UserSerializer, UserTokenSerializer
 
 class LoginView(TokenObtainPairView):
     
-    serializer_class = TokenObtainPairSerializer
+    serializer_class = CustomTokenObtainPairSerializer
 
 
     def post(self, request, *args, **kwargs):
