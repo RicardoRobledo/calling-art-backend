@@ -3,11 +3,10 @@ from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from apps.base.utils import format_response
 from apps.users.models import User
-from apps.users.user_serializers import UserSerializer, UserTokenSerializer
+from apps.users.user_serializers import UserSerializer
 from apps.accounts.serializers import CustomTokenObtainPairSerializer
 
 
@@ -46,20 +45,12 @@ class LoginView(TokenObtainPairView):
 
   
         if login_serializer.is_valid():
-
-            user_token_serializer = UserTokenSerializer(user)
         
             login(request, user)
 
-            message = {
-                'user':user_token_serializer.data,
-            }
             status_gotten = status.HTTP_200_OK
-            
-            response = format_response(message, status_gotten)
-            response.set_cookie(key=settings.COOKIE_NAME, value=login_serializer.validated_data)
 
-            return response
+            return format_response(login_serializer.validated_data, status_gotten)
 
 
         message = {
