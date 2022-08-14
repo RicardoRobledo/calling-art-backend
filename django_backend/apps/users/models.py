@@ -47,6 +47,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+        indexes = [
+            models.Index(name='username_idx', fields=['username']),
+            models.Index(name='user_id_idx', fields=['id']),
+        ]
     
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']

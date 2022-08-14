@@ -57,6 +57,12 @@ class Image(models.Model):
         user (int): id to reference an user
     """
 
+    class Meta:
+        
+        indexes = [
+            models.Index(name='title_idx', fields=['title']),
+            models.Index(name='image_id_idx', fields=['id']),
+        ]
 
     title = models.CharField(max_length=20, null=False, blank=False)
     description = models.CharField(max_length=200, null=False, blank=False)
@@ -64,6 +70,7 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category, through='ImageCategory')
+        
 
 
 # -------------------------------------------------------------
@@ -81,5 +88,5 @@ class ImageCategory(models.Model):
     """
 
 
-    image = models.ForeignKey(Image, null=False, blank=False, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, null=False, blank=False, on_delete=models.CASCADE)
+    image = models.ForeignKey(Image, null=False, blank=False, db_index=True, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, null=False, blank=False, db_index=True, on_delete=models.CASCADE)
