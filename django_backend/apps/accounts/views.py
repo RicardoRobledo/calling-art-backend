@@ -11,6 +11,16 @@ from apps.accounts.serializers import CustomTokenObtainPairSerializer
 
 
 # ---------------------------------------------
+#         Custom Token Obtain Pair View
+# ---------------------------------------------
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+
+    serializer_class = CustomTokenObtainPairSerializer
+
+
+# ---------------------------------------------
 #                    Login view
 # ---------------------------------------------
 
