@@ -4,6 +4,7 @@ from drf_yasg.utils import swagger_auto_schema
 from django.utils.decorators import method_decorator
 import django_filters
 
+from apps.base.paginations import CustomPagination
 from apps.users.models import User
 from apps.users.user_serializers import UserSerializer
 from apps.base.permissions import IsOwnerUserOrReadOnly
@@ -76,7 +77,8 @@ class UserViewSet(viewsets.ModelViewSet):
     
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerUserOrReadOnly,)
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by('id')
     filterset_class = UserFilter
+    pagination_class = CustomPagination
     #filterset_fields = ['username']
     #filter_backends = [filters.SearchFilter]

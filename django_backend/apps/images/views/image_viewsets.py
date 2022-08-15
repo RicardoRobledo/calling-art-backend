@@ -4,6 +4,7 @@ from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
 import django_filters
 
+from apps.base.paginations import CustomPagination
 from apps.base.permissions import IsOwnerImageOrReadOnly
 from apps.images.models import Image
 from apps.images.serializers.image_serializers import ImageSerializer
@@ -70,7 +71,8 @@ class ImageFilter(django_filters.FilterSet):
 class ImageViewSet(viewsets.ModelViewSet):
     
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerImageOrReadOnly,)
-    queryset =  Image.objects.all()
+    queryset =  Image.objects.all().order_by('id')
     serializer_class = ImageSerializer
     filterset_class = ImageFilter
+    pagination_class = CustomPagination
     #filterset_fields = ['title']
