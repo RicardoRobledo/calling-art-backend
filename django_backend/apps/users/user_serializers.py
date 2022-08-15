@@ -55,11 +55,10 @@ class UserSerializer(serializers.ModelSerializer):
         
         images: list = [
             {
-                image.title :{
-                    'id': image.id,
-                    'description': image.description,
-                    'link': image.link,
-                }
+                'id': image.id,
+                'title': image.title,
+                'description': image.description,
+                'link': image.link,
             }
             for image in self.Meta.model.objects.get(id=instance.id).image_set.all()
         ]
