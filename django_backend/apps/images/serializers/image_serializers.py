@@ -75,3 +75,24 @@ class ImageSerializer(serializers.ModelSerializer):
 
         validated_data['user'] = User.objects.get(id=validated_data['user']['id']) # search user and replace in Python's dict
         return Image.objects.create(**validated_data)
+    
+    
+    def update(self, instance, validated_data) -> Image:
+        """
+        This method update our image
+
+        Args:
+            instance (Image): image object
+            validated_data (dict): dict with our new values to add
+
+        Returns:
+            Our image validated
+        """
+
+        validated_data['user'] = User.objects.get(id=validated_data['user']['id'])
+
+        # This is for set each value in each key that contains both
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        return instance

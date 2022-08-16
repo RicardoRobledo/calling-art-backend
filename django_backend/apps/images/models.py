@@ -70,7 +70,9 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category, through='ImageCategory')
-        
+    
+    def __str__(self):
+        return f'{self.title} - {self.description} - {self.link} - {self.user}'
 
 
 # -------------------------------------------------------------
