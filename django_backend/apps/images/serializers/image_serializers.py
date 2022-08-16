@@ -94,5 +94,7 @@ class ImageSerializer(serializers.ModelSerializer):
         # This is for set each value in each key that contains both
         for key, value in validated_data.items():
             setattr(instance, key, value)
+        
+        instance.save()
 
         return instance
