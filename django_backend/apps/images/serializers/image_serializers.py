@@ -50,7 +50,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
         return {
             'id': instance.id,
-            'created_by': instance.user.username,
+            'user_id': instance.user.id,
             'title': instance.title,
             'description': instance.description,
             'link': instance.link,
