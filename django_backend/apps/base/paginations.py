@@ -6,5 +6,5 @@ class CustomPagination(PageNumberPagination):
     This class define our pagination
     """
     
-    page_size = 25
+    page_size = 24
     page_size_query_param = 'page_size'
