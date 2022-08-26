@@ -13,9 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
-import dj_database_url
 import os
-import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,8 +54,6 @@ MY_APPS = [
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
-SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies" 
-
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS 
 
 MIDDLEWARE = [
@@ -71,8 +67,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
-
-SESSION_COOKIE_HTTPONLY = True
 
 ROOT_URLCONF = 'django_backend.urls'
 
@@ -175,7 +169,11 @@ SIMPLE_JWT = {
     #'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-COOKIE_NAME = 'jwt_cookie'
+# -----------------------Cookies--------------------------
+#SESSION_COOKIE_HTTPONLY = True
+#SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies" 
+#COOKIE_NAME = 'jwt_cookie'
+# --------------------------------------------------------
 
 SWAGGER_SETTINGS = {
 

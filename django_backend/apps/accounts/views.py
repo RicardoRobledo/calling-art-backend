@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import login, logout, authenticate
 from rest_framework.views import APIView
 from rest_framework import status
@@ -44,15 +43,10 @@ class LoginView(TokenObtainPairView):
         status_gotten = None
 
 
-        if request.session.test_cookie_worked():
-            request.session.delete_test_cookie()
-
-
         user = authenticate(
             username=request.data.get('username'),
             password=request.data.get('password')
         )
-
   
         if login_serializer.is_valid():
         
@@ -60,7 +54,6 @@ class LoginView(TokenObtainPairView):
             status_gotten = status.HTTP_200_OK
 
             return format_response(login_serializer.validated_data, status_gotten)
-
 
         message = {
             'message':'error in type of data',
@@ -158,7 +151,6 @@ class LogoutView(APIView):
             status_gotten = status.HTTP_200_OK
 
             response = format_response(message, status_gotten)
-            response.delete_cookie(settings.COOKIE_NAME)
 
             return response
 
