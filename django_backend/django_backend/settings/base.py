@@ -17,7 +17,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# Use this if we can more folders in our setting files
+# Use this if you have more folders in your setting files
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 
 # Quick-start development settings - unsuitable for production
