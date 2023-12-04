@@ -45,6 +45,10 @@ You can watch the frontend here: [calling-art-frontend](https://github.com/KGHer
 
 <br>
 
+## Video
+- [Link](https://youtu.be/UYQ41Tr4bCc?feature=shared)
+
+<br>
 
 ## Deployment in Heroku :smile:
 
